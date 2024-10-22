@@ -1,3 +1,6 @@
+import { PrismaClient } from '@prisma/client';
+import { PrismaD1 } from '@prisma/adapter-d1';
+
 /**
  * Welcome to Cloudflare Workers! This is your first worker.
  *
@@ -16,9 +19,23 @@ export default {
 		const url = new URL(request.url);
 		switch (url.pathname) {
 			case '/message':
-				return new Response('Hello, World!');
+				console.log('logging on the server');
+				return new Response('Hello, World 2 !');
+			case '/blog-message':
+				console.log('Generating blog header');
+				return new Response(`Blog for Date: ${Date.now()}`);
 			case '/random':
 				return new Response(crypto.randomUUID());
+			case '/api/beverages':
+				const { results } = await env.DB.prepare('SELECT * FROM Customers WHERE CompanyName = ?').bind('Bs Beverages').all();
+				return Response.json(results);
+			case '/api/users':
+				const adapter = new PrismaD1(env.DB);
+				const prisma = new PrismaClient({ adapter });
+
+				const users = await prisma.user.findMany();
+				const result = JSON.stringify(users);
+				return new Response(result);
 			default:
 				return new Response('Not Found', { status: 404 });
 		}

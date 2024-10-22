@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>My blog</title>
+	</head>
+	<body>
+		<h1 id="heading"></h1>
+		<button id="button">My blog content.</button>
+		<div id="blog content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, officia!</div>
+		<script>
+			fetch('/blog-message')
+				.then((resp) => resp.text())
+				.then((text) => {
+					const h1 = document.getElementById('heading');
+					h1.textContent = text;
+				});
+		</script>
+	</body>
+</html>

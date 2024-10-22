@@ -10,3 +10,8 @@ assets = { directory = "./public", binding = "ASSETS" }
 # Configuration: https://developers.cloudflare.com/workers/observability/logs/workers-logs/#enable-workers-logs
 [observability]
 enabled = true
+
+[[d1_databases]]
+binding = "DB"                                       # i.e. available in your Worker on env.DB
+database_name = "prod-d1"
+database_id = "28c43b37-88c0-498e-82ae-7db7ac1ad940"
